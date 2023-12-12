@@ -1,18 +1,12 @@
 {
 	"compilerOptions": {
-		"module": "ES2022",
-		"strict": true,
-		"moduleResolution": "Node",
-		"noImplicitAny": true,
-		"sourceMap": true,
-		"allowSyntheticDefaultImports": true
+	  "module": "commonjs",
+	  "strict": true,
+	  "moduleResolution": "node",
+	  "noImplicitAny": true,
+	  "sourceMap": true,
+	  "allowSyntheticDefaultImports": true
 	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "**/*.spec.ts"],
-	"ts-node": {
-		"esm": true,
-		"compilerOptions": {
-			"module": "CommonJS"
-		}
-	}
-}
+	"include": ["*.ts", "src/**/*.ts"],
+	"exclude": ["node_modules", "**/*.spec.ts"]
+  }
