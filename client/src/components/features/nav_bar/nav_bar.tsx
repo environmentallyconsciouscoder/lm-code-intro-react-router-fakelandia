@@ -40,7 +40,7 @@ const NavBar: React.FC<NavBarProps> = ({ routes,  heading}) => {
     <NavLinkWrapper>
       {routes.map((route) => (
         <NavLinkWrapper key={route.id}>
-          <NavLink to={route.path}>
+          <NavLink to={route.path} style={({isActive}) => isActive ? {color: "red"} : {color: "blue"}}>
             <div>{route.name}</div>
           </NavLink>
         </NavLinkWrapper>
