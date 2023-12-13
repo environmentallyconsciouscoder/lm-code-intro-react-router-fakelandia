@@ -8,6 +8,7 @@ const NavContainer = styled.nav`
   padding: 0 20px;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const HeadingWrapper = styled.div`
