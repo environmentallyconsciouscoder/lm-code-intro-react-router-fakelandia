@@ -10,7 +10,7 @@ function Home() {
   const misdeameanours = userContext.data === null ? [] : userContext.data.misdemeanours;
 
   return (
-    <>
+    <div style={{height: '100%', overflow: 'auto'}}>
       {misdeameanours.length > 0 ? (
         misdeameanours.map((data: Misdemeanour, index: number) => (
           <div key={index}>
@@ -21,7 +21,7 @@ function Home() {
       ) : (
         <p>No misdemeanours available</p>
       )}
-    </>
+    </div>
   );
 }
 
