@@ -18,7 +18,7 @@ export const MisdeameanourContextProvider = ({children}: MisdeameanourContextPro
   const navigate = useNavigate(); // get the navigate function from React Router
 
 
-  const fetchData = async (url) => {
+  const fetchData = async (url: string) => {
     try {
       const response = await fetch(url);
       if (response.status === 404) {
