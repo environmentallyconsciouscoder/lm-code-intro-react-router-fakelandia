@@ -1,22 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { MisdeameanourContext } from '../context/data_provider';
 import { Misdemeanour } from '../types/misdeameanour.types';
+import Card from '../features/card/card';
 
 function Home() {
   const userContext = useContext(MisdeameanourContext);
   console.log("userContext", userContext);
+  const [selectedFilter, setSelectedFilter] = useState('All'); // Step 1
 
-  // Check if misdeameanours is null or undefined before mapping
   const misdeameanours = userContext.data === null ? [] : userContext.data.misdemeanours;
+
+  const handleFilterChange = (event: { target: { value: string; }; }) => {
+    setSelectedFilter(event.target.value);
+  };
+
+  const filteredMisdeameanours = selectedFilter === "All" ? misdeameanours: misdeameanours.filter((data: { misdemeanour: string; }) => data.misdemeanour === selectedFilter);
 
   return (
     <div style={{height: '100%', overflow: 'auto'}}>
-      {misdeameanours.length > 0 ? (
-        misdeameanours.map((data: Misdemeanour, index: number) => (
-          <div key={index}>
-            <div>{data.misdemeanour}</div>
-            <img src={`https://picsum.photos/100/100`} alt={`Image ${index}`} />
-          </div>
+      <label>
+        Filter by:
+        <select value={selectedFilter} onChange={handleFilterChange}>
+          <option value="All">All</option>
+          <option value="rudeness">rudeness</option>
+          <option value="vegetables">vegetables</option>
+          <option value="united">united</option>
+        </select>
+      </label>
+      {filteredMisdeameanours.length > 0 ? (
+        filteredMisdeameanours.map((data: Misdemeanour, index: number) => (
+          <Card data={data} index={index} />
         ))
       ) : (
         <p>No misdemeanours available</p>
