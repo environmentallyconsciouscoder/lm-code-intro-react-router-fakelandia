@@ -1,36 +1,54 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Misdemeanour } from '../types/misdeameanour.types';
+interface UseApiResult {
+  fetchData: (url: string, method?: 'GET' | 'POST', body?: object) => Promise<void>;
+  data: {misdemeanours: [Misdemeanour]} | null;
+  loading: boolean
+  error: string | null
+}
 
-export function useLoading() {
-  const [isLoading, setIsLoading] = useState(false);
+function useApi(): UseApiResult {
+  const [data, setData] = useState<{misdemeanours: [Misdemeanour]} | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const startLoading = () => {
-    setIsLoading(true);
-  };
-
-  const stopLoading = () => {
-    setIsLoading(false);
-  };
-
-  const fetchData = async (url: string) => {
+  const fetchData = async (url: string, method: 'GET' | 'POST' = 'GET', body?: object) => {
     try {
-      startLoading();
 
-      const response = await fetch(url);
+      setLoading(true);
+      const options: RequestInit = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      if (method === 'POST' && body) {
+        options.body = JSON.stringify(body);
+      }
+
+      const response = await fetch(url, options);
 
       if (response.status === 404) {
         console.error("Data not found: 404");
-        return "404"
-    }
-
-      stopLoading();
-
-      return response.json();
+        setError("Data not found");
+        navigate("/404");
+      } else {
+        const jsonData = await response.json();
+        setData(jsonData);
+        setError(null);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
-      stopLoading();
-      return { error: "Error fetching data" };
+      setError("Error fetching data");
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { isLoading, startLoading, stopLoading, fetchData };
+  return { fetchData, data, loading, error };
 }
+
+export default useApi;

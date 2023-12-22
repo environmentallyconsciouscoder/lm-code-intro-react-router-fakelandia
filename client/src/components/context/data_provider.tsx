@@ -1,10 +1,10 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useEffect } from "react";
 import React from 'react';
+import useApi from "../hooks/useFetch";
+import { Misdemeanour } from '../types/misdeameanour.types';
 
 type MisdeameanourContextType = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: {misdemeanours: [Misdemeanour]} | null;
 }
 
 type MisdeameanourContextProviderType = {
@@ -14,35 +14,11 @@ type MisdeameanourContextProviderType = {
 export const MisdeameanourContext = createContext({} as MisdeameanourContextType);
 
 export const MisdeameanourContextProvider = ({children}: MisdeameanourContextProviderType) => {
-  const [data, setData] = useState(null);
-  const navigate = useNavigate(); // get the navigate function from React Router
-
-
-  const fetchData = async (url: string) => {
-    try {
-      const response = await fetch(url);
-      if (response.status === 404) {
-        console.error("Data not found: 404");
-        navigate("/404");
-      } else {
-        const jsonData = await response.json();
-        setData(jsonData);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  const { fetchData, data } = useApi();
 
   useEffect(() => {
     const fetchDataExample = async () => {
-
-      try {
-        console.log("here");
-
-        await fetchData("http://localhost:8080/api/misdemeanours/10");
-      } catch (e) {
-        console.log("catch", e);
-      }
+      await fetchData("http://localhost:8080/api/misdemeanours/10");
     };
 
     fetchDataExample();
