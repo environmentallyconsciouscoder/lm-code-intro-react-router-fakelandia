@@ -1,9 +1,6 @@
 const Validator : (value : string, name : string) => string[] | null = (value, name) => {
     const errorMessages = [];
 
-    console.log("value", value)
-    console.log("name", name)
-
     switch (name) {
         case 'subject':
 
