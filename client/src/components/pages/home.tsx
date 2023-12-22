@@ -28,7 +28,9 @@ function Home() {
       </label>
       {filteredMisdeameanours.length > 0 ? (
         filteredMisdeameanours.map((data: Misdemeanour, index: number) => (
-          <Card data={data} index={index} />
+          <div key={index}>
+            <Card data={data} index={index} />
+          </div>
         ))
       ) : (
         <p>No misdemeanours available</p>
