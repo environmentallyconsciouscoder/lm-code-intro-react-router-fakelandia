@@ -5,7 +5,6 @@ import Card from '../features/card/card';
 
 function Home() {
   const userContext = useContext(MisdeameanourContext);
-  console.log("userContext", userContext);
   const [selectedFilter, setSelectedFilter] = useState('All'); // Step 1
 
   const misdeameanours = userContext.data === null ? [] : userContext.data.misdemeanours;
