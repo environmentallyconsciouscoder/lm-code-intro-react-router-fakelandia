@@ -3,6 +3,7 @@ export const MISDEMEANOURS = [
 	'vegetables',
 	'lift',
 	'united',
+	'justTalked'
 ] as const;
 export type MisdemeanourKind = (typeof MISDEMEANOURS)[number];
 
