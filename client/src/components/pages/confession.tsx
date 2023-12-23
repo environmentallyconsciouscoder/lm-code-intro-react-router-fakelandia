@@ -17,7 +17,11 @@ function Confession() {
   const { fetchData, dataFromPostRequest } = useApi();
 
   useEffect(() => {
-    console.log('After fetchData dataFromPostRequest:', dataFromPostRequest);
+      console.log('After fetchData dataFromPostRequest:', dataFromPostRequest);
+      const isConfessionAMisdemeanour = dataFromPostRequest !== null ? dataFromPostRequest?.justTalked === false : false;
+    if (isConfessionAMisdemeanour) {
+      console.log("need to add to the list")
+    }
   }, [dataFromPostRequest]);
 
   const handleInputChange = (event: {target: { value: string, name: string };}) => {
@@ -38,7 +42,6 @@ function Confession() {
 
     const getValidationErrors = Validator(value, name);
     const validationErrors = getValidationErrors === null ? [] : getValidationErrors;
-    // console.log("validationErrors", validationErrors)
     setErrors((prevErrors) => ({ ...prevErrors, [name]: validationErrors }));
 
   }

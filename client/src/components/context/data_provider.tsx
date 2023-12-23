@@ -1,4 +1,4 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import React from 'react';
 import useApi from "../hooks/useFetch";
 import { Misdemeanour } from '../types/misdeameanour.types';
@@ -14,7 +14,10 @@ type MisdeameanourContextProviderType = {
 export const MisdeameanourContext = createContext({} as MisdeameanourContextType);
 
 export const MisdeameanourContextProvider = ({children}: MisdeameanourContextProviderType) => {
-  const { fetchData, data } = useApi();
+  // const { fetchData, data } = useApi();
+
+  const { fetchData, data: dataFromGetRequest } = useApi();
+  const [dataFromPostRequest, setDataFromPostRequest] = useState(null);
 
   useEffect(() => {
     const fetchDataExample = async () => {
@@ -24,5 +27,6 @@ export const MisdeameanourContextProvider = ({children}: MisdeameanourContextPro
     fetchDataExample();
   }, []);
 
-  return <MisdeameanourContext.Provider value={{ data }}>{children}</MisdeameanourContext.Provider>
+  // return <MisdeameanourContext.Provider value={{ data }}>{children}</MisdeameanourContext.Provider>
+  return <MisdeameanourContext.Provider value={{ data: dataFromPostRequest || dataFromGetRequest }}>{children}</MisdeameanourContext.Provider>;
 }
