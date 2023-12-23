@@ -13,7 +13,7 @@ function Router() {
             <Route path="" element={<Home />} />
             <Route path="/confession" element={<Confession />} />
             <Route path="/misdemeanour" element={<Misdemeanour />} />
-            <Route path="/404" element={<NotFound />} />
+            <Route path="/error/:statusCode" element={<NotFound />} />
             <Route path="*" element={<NotFound />} />
         </Route>
     </Routes>
