@@ -31,11 +31,11 @@ function ConfessionForm({ handleInputChange, subject, selectedOption, message, e
           onChange={handleInputChange}
           name='selectedOption'
         >
-          <option value='Mild Public Rudeness'>Mild Public Rudeness</option>
-          <option value='Speaking in a Lift'>Speaking in a Lift</option>
-          <option value='Not Eating Your Vegetables'>Not Eating Your Vegetables</option>
-          <option value='Supporting Manchester United'>Supporting Manchester United</option>
-          <option value='I just want to talk'>I just want to talk</option>
+          <option value='rudeness'>Mild Public Rudeness</option>
+          <option value='rudeness'>Speaking in a Lift</option>
+          <option value='vegetables'>Not Eating Your Vegetables</option>
+          <option value='united'>Supporting Manchester United</option>
+          <option value='just-talk'>I just want to talk</option>
         </select>
         <textarea
           value={message}

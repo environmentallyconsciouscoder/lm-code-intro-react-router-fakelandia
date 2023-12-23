@@ -1,6 +1,7 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import ConfessionForm from '../features/form/form';
 import Validator from '../features/validate/validator';
+import useApi from '../hooks/useFetch';
 
 function Confession() {
 
@@ -12,6 +13,12 @@ function Confession() {
     selectedOption: [],
     message: [],
   });
+
+  const { fetchData, dataFromPostRequest } = useApi();
+
+  useEffect(() => {
+    console.log('After fetchData dataFromPostRequest:', dataFromPostRequest);
+  }, [dataFromPostRequest]);
 
   const handleInputChange = (event: {target: { value: string, name: string };}) => {
     const { name, value } = event.target;
@@ -31,7 +38,7 @@ function Confession() {
 
     const getValidationErrors = Validator(value, name);
     const validationErrors = getValidationErrors === null ? [] : getValidationErrors;
-    console.log("validationErrors", validationErrors)
+    // console.log("validationErrors", validationErrors)
     setErrors((prevErrors) => ({ ...prevErrors, [name]: validationErrors }));
 
   }
@@ -46,10 +53,17 @@ function Confession() {
     );
   };
 
-  const handleSubmit = (event: FormEvent): void => {
+  const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
     console.log("SUBMITTED");
-    // Add logic for form submission if needed
+    const body = {
+      "subject": subject,
+      "reason": selectedOption, // either a MisdemeanourKind OR the string `just-talk`
+      "details": message
+    }
+    console.log("Before fetchData dataFromPostRequest", dataFromPostRequest);
+    await fetchData("http://localhost:8080/api/confess", 'POST', body);
+    console.log("this console.log will show before the function fetchData finish executing", dataFromPostRequest);
   };
 
   return (
