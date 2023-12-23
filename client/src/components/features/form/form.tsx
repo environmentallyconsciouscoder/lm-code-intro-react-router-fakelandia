@@ -10,10 +10,14 @@ type ConfessionFormProps = {
     message: string[],}
   isFormValid: () => boolean;
   handleSubmit: (event: FormEvent) => void;
+  loading: boolean;
 };
 
-function ConfessionForm({ handleInputChange, subject, selectedOption, message, errors, isFormValid, handleSubmit }: ConfessionFormProps) {
+function ConfessionForm({ handleInputChange, subject, selectedOption, message, errors, isFormValid, handleSubmit, loading }: ConfessionFormProps) {
   return (
+    <>
+    {loading ?
+    <p>Loading...</p> :
     <form style={{ height: '100%' }} onSubmit={handleSubmit}>
       <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '50rem', height: '50%', justifyContent: 'space-evenly' }}>
         <label>Subject:</label>
@@ -46,6 +50,9 @@ function ConfessionForm({ handleInputChange, subject, selectedOption, message, e
         <button type="submit" disabled={!isFormValid()}>Submit</button>
       </div>
     </form>
+    }
+      {/* {loading && <p>Loading...</p>} */}
+    </>
   );
 }
 

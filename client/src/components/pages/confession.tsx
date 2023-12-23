@@ -14,15 +14,16 @@ function Confession() {
     message: [],
   });
 
-  const { fetchData, dataFromPostRequest } = useApi();
+  const { fetchData, dataFromPostRequest, loading } = useApi();
 
   useEffect(() => {
       console.log('After fetchData dataFromPostRequest:', dataFromPostRequest);
       const isConfessionAMisdemeanour = dataFromPostRequest !== null ? dataFromPostRequest?.justTalked === false : false;
+      console.log("after loading", loading)
     if (isConfessionAMisdemeanour) {
       console.log("need to add to the list")
     }
-  }, [dataFromPostRequest]);
+  }, [dataFromPostRequest, loading]);
 
   const handleInputChange = (event: {target: { value: string, name: string };}) => {
     const { name, value } = event.target;
@@ -58,6 +59,7 @@ function Confession() {
 
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
+    console.log("before loading", loading)
     console.log("SUBMITTED");
     const body = {
       "subject": subject,
@@ -79,8 +81,8 @@ function Confession() {
         errors={errors}
         isFormValid={isFormValid}
         handleSubmit={handleSubmit}
+        loading={loading}
       />
-
     </>
   )
 }
